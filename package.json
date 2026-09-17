@@ -1,0 +1,20 @@
+{
+  "name": "controle-de-gastos",
+  "version": "1.0.0",
+  "description": "Controle de gastos pessoais: dashboard mensal de receitas e despesas",
+  "main": "server.js",
+  "author": "Lucas Torres de Brito Soares <lucas_torres_01@outlook.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.2",
+    "express": "^4.21.2"
+  }
+}

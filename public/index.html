@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controle de Gastos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+          <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+          <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+        </svg>
+        <span>Controle de Gastos</span>
+      </div>
+      <button class="btn btn--primario" id="btn-nova">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 5v14" />
+          <path d="M5 12h14" />
+        </svg>
+        Nova transação
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filtros">
+      <label class="campo">
+        <span>Mês</span>
+        <select id="filtro-mes"></select>
+      </label>
+      <label class="campo">
+        <span>Categoria</span>
+        <select id="filtro-categoria">
+          <option value="">Todas</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <span class="card__titulo">Saldo</span>
+        <span class="card__valor card__valor--saldo" id="saldo-valor">--</span>
+      </div>
+      <div class="card">
+        <span class="card__titulo">Receitas</span>
+        <span class="card__valor card__valor--receita" id="receitas-valor">--</span>
+      </div>
+      <div class="card">
+        <span class="card__titulo">Despesas</span>
+        <span class="card__valor card__valor--despesa" id="despesas-valor">--</span>
+      </div>
+    </section>
+
+    <section class="card orcamentos-card">
+      <div class="secao-cabecalho">
+        <h2 class="secao-titulo">Orçamentos do mês</h2>
+        <button class="btn btn--secundario btn--pequeno" id="btn-orcamento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 5v14" />
+            <path d="M5 12h14" />
+          </svg>
+          Definir limite
+        </button>
+      </div>
+      <ul class="orcamentos" id="orcamentos"></ul>
+      <p class="vazio" id="orcamentos-vazio" hidden>Nenhum orçamento definido. Clique em "Definir limite" para acompanhar uma categoria.</p>
+    </section>
+
+    <section class="card grafico-card">
+      <h2 class="secao-titulo">Despesas por categoria</h2>
+      <div class="grafico-wrap">
+        <canvas id="grafico"></canvas>
+        <p class="vazio" id="grafico-vazio" hidden>Sem despesas neste mês.</p>
+      </div>
+    </section>
+
+    <section class="card lista-card">
+      <h2 class="secao-titulo">Transações</h2>
+      <ul class="lista" id="lista"></ul>
+      <p class="vazio" id="lista-vazia" hidden>Nenhuma transação encontrada.</p>
+    </section>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal__box">
+      <div class="modal__header">
+        <h2 id="modal-titulo">Nova transação</h2>
+        <button class="btn-icon" id="modal-fechar" aria-label="Fechar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+      <form id="form" novalidate>
+        <label class="campo">
+          <span>Descrição</span>
+          <input type="text" id="form-descricao" maxlength="80" placeholder="Ex.: Supermercado" autocomplete="off" />
+        </label>
+        <label class="campo">
+          <span>Valor (R$)</span>
+          <input type="number" id="form-valor" step="0.01" min="0.01" placeholder="0,00" />
+        </label>
+        <div class="campos-duplo">
+          <label class="campo">
+            <span>Tipo</span>
+            <select id="form-tipo">
+              <option value="despesa">Despesa</option>
+              <option value="receita">Receita</option>
+            </select>
+          </label>
+          <label class="campo">
+            <span>Categoria</span>
+            <select id="form-categoria"></select>
+          </label>
+        </div>
+        <label class="campo">
+          <span>Data</span>
+          <input type="date" id="form-data" />
+        </label>
+        <p class="form-erro" id="form-erro" hidden></p>
+        <div class="modal__acoes">
+          <button type="button" class="btn btn--secundario" id="modal-cancelar">Cancelar</button>
+          <button type="submit" class="btn btn--primario">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-orcamento">
+    <div class="modal__box">
+      <div class="modal__header">
+        <h2 id="modal-orcamento-titulo">Definir orçamento</h2>
+        <button class="btn-icon" id="modal-orcamento-fechar" aria-label="Fechar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+      <form id="form-orcamento" novalidate>
+        <label class="campo">
+          <span>Categoria</span>
+          <select id="form-orcamento-categoria"></select>
+        </label>
+        <label class="campo">
+          <span>Limite mensal (R$)</span>
+          <input type="number" id="form-orcamento-limite" step="0.01" min="0.01" placeholder="0,00" />
+        </label>
+        <p class="form-erro" id="form-orcamento-erro" hidden></p>
+        <div class="modal__acoes">
+          <button type="button" class="btn btn--secundario" id="modal-orcamento-cancelar">Cancelar</button>
+          <button type="submit" class="btn btn--primario">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
