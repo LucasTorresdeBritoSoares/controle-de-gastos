@@ -1,12 +1,16 @@
 # Controle de Gastos Pessoais
 
+[![CI](https://github.com/LucasTorresdeBritoSoares/controle-de-gastos/actions/workflows/ci.yml/badge.svg)](https://github.com/LucasTorresdeBritoSoares/controle-de-gastos/actions/workflows/ci.yml)
+
 > Aplicação web completa para controlar receitas e despesas do mês. Frontend em HTML/CSS/JS puro, servido por um backend em Node.js com banco SQLite.
 
 Feito como primeiro projeto full stack pra valer: API REST, banco de dados, gráficos, orçamentos com alerta e testes automatizados, tudo do zero.
 
 ## Demo
 
-🔗 **A URL da demo entra aqui depois do deploy no Render** (ex.: `https://controle-de-gastos.onrender.com`)
+🔗 **Deployado no Render:** https://controle-de-gastos-3fj5.onrender.com
+
+> No plano gratuito, a primeira visita pode demorar ~50s porque o serviço "acorda" sob demanda.
 
 ## Funcionalidades
 
